@@ -6,7 +6,7 @@ import { RecordingsDbService, type Recording } from '$lib/services/RecordingDbSe
 import { toast } from '$lib/services/ToastService';
 import { TranscriptionServiceFasterWhisperServerLive } from '$lib/services/TranscriptionServiceFasterWhisperServerLive';
 import { TranscriptionServiceGroqLive } from '$lib/services/TranscriptionServiceGroqLive';
-import { TranscriptionServiceWhisperLive } from '$lib/services/TranscriptionServiceWhisperLive';
+import { TranscriptionServiceWhisperGPTLive } from '$lib/services/TranscriptionServiceWhisperGPTLive';
 import { renderErrorAsToast } from '$lib/services/renderErrorAsToast';
 import { NotificationService, TranscriptionService, WhisperingError } from '@repo/shared';
 import { Effect, Option } from 'effect';
@@ -72,7 +72,7 @@ export const recordings = Effect.gen(function* () {
 			}).pipe(Effect.catchAll(renderErrorAsToast), Effect.runPromise),
 		transcribeRecording: (id: string) => {
 			const selectedTranscriptionService = {
-				OpenAI: TranscriptionServiceWhisperLive,
+				OpenAI: TranscriptionServiceWhisperGPTLive,
 				Groq: TranscriptionServiceGroqLive,
 				'faster-whisper-server': TranscriptionServiceFasterWhisperServerLive,
 			}[settings.value.selectedTranscriptionService];
